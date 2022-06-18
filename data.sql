@@ -56,33 +56,59 @@ COMMIT;
   DELETE FROM animals;
 
   /* Roll back */
-
-  ROLLBACK;
+ROLLBACK;
 
 /* verify if all records in the animals table still exist */
-
- SELECT * FROM animals;
+SELECT * FROM animals;
 
  /* Delete all animals born after Jan 1st, 2022. */
 
 DELETE FROM animals WHERE date_of_birth > DATE '2022-01-01';
 
 /* Create a savepoint for the transaction. */
-
 SAVEPOINT SP1;
 
 /* Update all animals' weight to be their weight multiplied by - */
-
 UPDATE animals SET weight_kg = weight_kg * -1;
 
 /* Rollback to the savepoint */
-
 ROLLBACK TO SP1;
 
 /* Update all animals' weights that are negative to be their weight multiplied by -1. */
-
 UPDATE animals SET weight_kg = weight_kg * -1 WHERE weight_kg < 0;
 
 /* Commit transaction */
-
 COMMIT;
+
+/* Insert the following data into the owners table */
+INSERT INTO owners (full_name, age)
+  VALUES ('Sam Smith', 34), ('Jennifer Orwell', 19),
+  ('Bob', 45), ('Melody Pond', 77),
+  ('Dean Winchester', 14), ('Jodie Whittaker', 38);
+
+  INSERT INTO species (name)
+  VALUES ('Pokemon') ('Digimon');
+
+/* Modify your inserted animals so it includes the species_id value */ 
+/* If the name ends in "mon" it will be Digimon */ 
+ UPDATE animals SET species_id = 2 WHERE name LIKE '%mon';
+
+/* All other animals are Pokemon */
+UPDATE animals SET species_id = 1 WHERE species_id = NULL;
+
+/* Modify your inserted animals to include owner information (owner_id) */ 
+
+/* Sam Smith owns Agumon */ 
+UPDATE animals SET owner_id = 1 WHERE name = 'Agumon';
+
+/* Jennifer Orwell owns Gabumon and Pikachu. */
+UPDATE animals SET owner_id = 2 WHERE name = 'Gabumon' AND name = 'Pikachu';
+
+/* Bob owns Devimon and Plantmon */
+UPDATE animals SET owner_id = 3 WHERE name = 'Devimon' OR name = 'Plantmon';
+
+/* Melody Pond owns Charmander, Squirtle, and Blossom */
+ UPDATE animals SET owner_id = 4 WHERE name = 'Charmander' OR name = 'Squirtle' OR name = 'Blossom';
+
+/* Dean Winchester owns Angemon and Boarmon */
+UPDATE animals SET owner_id = 5 WHERE name = 'Angemon' OR name = 'Boarmon';
