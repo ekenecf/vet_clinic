@@ -67,3 +67,17 @@ CREATE TABLE visits (
    FOREIGN KEY (animal_id) REFERENCES animals(id),
    FOREIGN KEY (vet_id) REFERENCES vetS(id)
 );
+
+--  It is important to keep only the queries that change the database structure in the schema.sql file.
+
+explain analyze SELECT COUNT(*) FROM visits where animal_id = 4;
+CREATE INDEX animal_id_desc
+explain analyze SELECT COUNT(*) FROM visits where animal_id = 4;
+
+explain analyze SELECT * FROM visits where vet_id = 2;
+CREATE INDEX vet_index
+explain analyze SELECT * FROM visits where vet_id = 2;
+
+SELECT * FROM owners where email = 'owner_18327@mail.com';
+CREATE INDEX email_desc ON owners(email DESC);
+SELECT * FROM owners where email = 'owner_18327@mail.com';
